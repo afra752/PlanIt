@@ -17,7 +17,7 @@ const uosCS = [
   { id: "1501116", name: "Programming I", credits: 4, prerequisites: [], corequisites: [], yearStanding: null, terms: ["fall","spring","summer"], difficulty: 3, semesterPlaced: 2, completed: false, grade: null },
   { id: "1440132", name: "Calculus II", credits: 3, prerequisites: ["1440131"], corequisites: [], yearStanding: null, terms: ["fall","spring","summer"], difficulty: 3, semesterPlaced: 2, completed: false, grade: null },
   { id: "1420101", name: "General Chemistry I", credits: 3, prerequisites: [], corequisites: [], yearStanding: null, terms: ["fall","spring","summer"], difficulty: 3, semesterPlaced: 2, completed: false, grade: null },
-  { id: "1420102", name: "General Chemistry I Lab", credits: 1, prerequisites: ["1420101"], corequisites: [], yearStanding: null, terms: ["fall","spring","summer"], difficulty: 2, semesterPlaced: 2, completed: false, grade: null },
+  { id: "1420102", name: "General Chemistry I Lab", credits: 1, prerequisites: [], corequisites: ["1420101"], yearStanding: null, terms: ["fall","spring","summer"], difficulty: 2, semesterPlaced: 2, completed: false, grade: null },
 
   // Year 2, Semester 1 (id: 3)
   { id: "0101100", name: "Islamic Culture", credits: 3, prerequisites: [], corequisites: [], yearStanding: null, terms: ["fall","spring","summer"], difficulty: 1, semesterPlaced: 3, completed: false, grade: null },
@@ -38,8 +38,8 @@ const uosCS = [
   // Year 3, Semester 1 (id: 5)
   { id: "1501330", name: "Intro. to Artificial Intelligence", credits: 3, prerequisites: ["1501215"], corequisites: [], yearStanding: null, terms: ["fall"], difficulty: 3, semesterPlaced: 5, completed: false, grade: null },
   { id: "1501263", name: "Intro. to Database Management Systems", credits: 3, prerequisites: ["1501215"], corequisites: [], yearStanding: null, terms: ["fall","spring"], difficulty: 3, semesterPlaced: 5, completed: false, grade: null },
-  { id: "1501371", name: "Design & Analysis of Algorithms", credits: 3, prerequisites: ["1501215","1501279"], corequisites: [], yearStanding: null, terms: ["fall"], difficulty: 4, semesterPlaced: 5, completed: false, grade: null },
-  { id: "1501366", name: "Software Engineering", credits: 3, prerequisites: ["1501215"], corequisites: [], yearStanding: null, terms: ["fall","spring"], difficulty: 3, semesterPlaced: 5, completed: false, grade: null },
+  { id: "1501371", name: "Design & Analysis of Algorithms", credits: 3, prerequisites: ["1501215","1501279"], corequisites: [], yearStanding: null, terms: ["fall"], difficulty: 5, semesterPlaced: 5, completed: false, grade: null },
+  { id: "1501366", name: "Software Engineering", credits: 3, prerequisites: ["1501215"], corequisites: [], yearStanding: null, terms: ["fall","spring"], difficulty: 5, semesterPlaced: 5, completed: false, grade: null },
   { id: "0202213", name: "Critical Reading and Writing", credits: 3, prerequisites: ["0202112"], corequisites: [], yearStanding: null, terms: ["fall","spring"], difficulty: 2, semesterPlaced: 5, completed: false, grade: null },
 
   // Year 3, Semester 2 (id: 6)
@@ -47,7 +47,7 @@ const uosCS = [
   { id: "1501352", name: "Operating Systems", credits: 3, prerequisites: ["1501215"], corequisites: [], yearStanding: null, terms: ["fall","spring"], difficulty: 4, semesterPlaced: 6, completed: false, grade: null },
   { id: "1501372", name: "Formal Languages & Automatation Theory", credits: 3, prerequisites: ["1501215","1501279"], corequisites: [], yearStanding: null, terms: ["spring"], difficulty: 4, semesterPlaced: 6, completed: false, grade: null },
   { id: "1501250", name: "Networking Fundamentals", credits: 3, prerequisites: ["1501215"], corequisites: [], yearStanding: null, terms: ["fall","spring"], difficulty: 3, semesterPlaced: 6, completed: false, grade: null },
-  { id: "1501394", name: "Junior Project in CS", credits: 2, prerequisites: ["1501215"], corequisites: [], yearStanding: 3, terms: ["fall","spring"], difficulty: 2, semesterPlaced: 6, completed: false, grade: null },
+  { id: "1501394", name: "Junior Project in CS", credits: 2, prerequisites: ["1501215"], corequisites: [], yearStanding: 3, terms: ["fall","spring"], difficulty: 4, semesterPlaced: 6, completed: false, grade: null },
 
   // CO-OP: real plan lists it here, but it's summer-only so can't sit in a spring slot — left unplaced
   { id: "1501397", name: "CO-OP Summer Training", credits: 3, prerequisites: [], corequisites: [], yearStanding: 3, terms: ["summer"], difficulty: 2, semesterPlaced: null, completed: false, grade: null },
@@ -320,16 +320,11 @@ function handleDragEnd(evt) {
         return;
       }
     }
-    // Corequisites: must be placed in the same semester or earlier (never later)
+    // Corequisites: if already placed elsewhere, must be same semester or earlier (never later)
     for (const coreqId of course.corequisites) {
       const coreqCourse = currentCourses.find(c => c.id === coreqId);
       if (!coreqCourse) continue;
-
-      if (coreqCourse.semesterPlaced === null) {
-        alert(`${course.name} requires ${coreqCourse.name} to be placed in the same semester or earlier.`);
-        evt.from.appendChild(evt.item);
-        return;
-      }
+      if (coreqCourse.semesterPlaced === null) continue; // not placed yet — allow it, order doesn't matter
 
       const coreqRank = getSemesterRank(coreqCourse.semesterPlaced);
       if (coreqRank > targetRank) {
@@ -354,7 +349,7 @@ function startPlanner(mode) {
   howToPlanModal.style.display = "none";
   confirmDeleteModal.style.display = "none";
   nameplanModal.style.display = "none";
-
+  confirmResetModal.style.display = "none";
   currentMode = mode;
   currentPlanId = null;
   if (mode === "preset") {
@@ -388,7 +383,8 @@ function startPlanner(mode) {
   switchScreen(planChoice, plannerWorkspace);
   document.getElementById("plan-title").textContent =
     mode === "preset" ? "University of Sharjah — Computer Science" : "My Custom Plan";
-  renderPlannerWorkspace();
+  btnResetPlan.style.display = mode === "preset" ? "inline-flex" : "none";
+    renderPlannerWorkspace();
   setTimeout(() => { howToPlanModal.style.display = "flex"; }, 900);
 }
 
@@ -539,7 +535,24 @@ const btnConfirmDelete = document.getElementById("btn-confirm-delete");
 let currentMode = null;      // "preset" or "scratch"
 let currentPlanId = null;    // null for UOS preset, or a saved plan's unique id
 let planIdPendingDelete = null;
+const btnResetPlan = document.getElementById("btn-reset-plan");
+const confirmResetModal = document.getElementById("confirm-reset-modal");
+const btnCancelReset = document.getElementById("btn-cancel-reset");
+const btnConfirmReset = document.getElementById("btn-confirm-reset");
 
+btnResetPlan.addEventListener("click", () => {
+  confirmResetModal.style.display = "flex";
+});
+
+btnCancelReset.addEventListener("click", () => {
+  confirmResetModal.style.display = "none";
+});
+
+btnConfirmReset.addEventListener("click", () => {
+  localStorage.removeItem("planit-preset");
+  confirmResetModal.style.display = "none";
+  startPlanner("preset"); // reload fresh from the real uosCS template
+});
 function getSavedPlans() {
   const raw = localStorage.getItem("planit-saved-plans");
   return raw ? JSON.parse(raw) : [];
@@ -653,6 +666,7 @@ function loadSavedPlan(planId) {
  howToPlanModal.style.display = "none";
   confirmDeleteModal.style.display = "none";
   nameplanModal.style.display = "none";
+  confirmResetModal.style.display = "none";
 
   const plan = getSavedPlans().find(p => p.id === planId);  if (!plan) return;
 

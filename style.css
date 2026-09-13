@@ -325,17 +325,6 @@ main {
 }
 
 
-.btn-edit-terms:hover {
-  opacity: 1;
-}
-
-#add-semester-form select {
-  padding: 0.5rem;
-  border: 1px solid var(--border-soft);
-  border-radius: 10px;
-  font-family: inherit;
-}
-
 /* ---- Semester Grid: vertical stack of year groups ---- */
 #semester-grid {
   display: flex;
@@ -589,7 +578,8 @@ main {
 /* ---- How It Works Band (light, distinct section) ---- */
 .how-it-works-band {
   background-color: var(--accent-tertiary);
-  opacity: 0.97;
+  background-attachment: fixed !important;
+  background-size: cover;
   padding: 4rem 2rem;
 }
 
@@ -912,25 +902,27 @@ a.nav-logo, a.footer-brand {
   width: auto !important;
   min-width: 220px;
   height: 45px;
+  margin-top: 0;
 }
 
-
-.bg-blob {
-  animation: floatBlob 12s ease-in-out infinite;
+.cursor-glow {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-tertiary) 0%, transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: transform 0.08s ease-out, opacity 0.2s;
 }
 
-.bg-blob-2 {
-  animation-delay: -4s;
-  animation-duration: 15s;
+@media (max-width: 768px) {
+  .cursor-glow { display: none; } /* no mouse on touch devices */
 }
 
-.bg-blob-3 {
-  animation-delay: -8s;
-  animation-duration: 10s;
-}
-
-@keyframes floatBlob {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -20px) scale(1.05); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
+.plan-heading-actions {
+  display: flex;
+  gap: 0.6rem;
 }

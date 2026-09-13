@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="cursor-glow" id="cursor-glow"></div>
   <div class="bg-decor">
     <div class="bg-blob bg-blob-1"></div>
     <div class="bg-blob bg-blob-2"></div>
@@ -52,7 +53,10 @@
           <h2 id="plan-title"></h2>
           <p class="plan-tagline">Drag and drop courses to build your journey, your way.</p>
         </div>
-        <button id="btn-save-plan" class="btn-secondary-small" style="width: auto;">💾 Save Plan</button>
+        <div class="plan-heading-actions">
+          <button id="btn-reset-plan" class="btn-secondary-small" style="width: auto; display: none;">↺ Reset to Official Plan</button>
+          <button id="btn-save-plan" class="btn-secondary-small" style="width: auto;">💾 Save Plan</button>
+        </div>
       </div>
 
       <div class="workspace-layout">
@@ -131,6 +135,16 @@
       </div>
     </div>
   </div>
+  <div id="confirm-reset-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h2>Reset to Official Plan?</h2>
+      <p>This will erase your saved changes to the University of Sharjah plan and reload the original.</p>
+      <div class="form-btn-row">
+        <button id="btn-cancel-reset" class="btn-secondary-small">Cancel</button>
+        <button id="btn-confirm-reset" class="btn-primary-small">Reset</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
   <script src="script.js"></script>
@@ -143,5 +157,6 @@
     <div class="footer-tag">Made for DesignAthon 2026</div>
   </footer>
   <script src="reveal.js"></script>
+  <script src="cursor.js"></script>
 </body>
 </html>
