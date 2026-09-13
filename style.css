@@ -768,6 +768,7 @@ main {
 .ps-band-2 { background-color: rgba(243, 184, 206, 0.25); }
 .ps-band-3 { background-color: rgba(245, 201, 155, 0.25); }
 .ps-band-4 { background-color: rgba(130, 172, 137, 0.15); }
+.ps-band-5 { background-color: var(--bg-main);}
 
 .choice-icon { font-size: 2rem; margin-bottom: 0.8rem; }
 .plan-heading {
