@@ -926,3 +926,145 @@ a.nav-logo, a.footer-brand {
   display: flex;
   gap: 0.6rem;
 }
+
+/* ============================
+   MOBILE RESPONSIVE OVERRIDES
+   Only applies below 700px wide — desktop styling above is untouched
+   ============================ */
+@media (max-width: 700px) {
+
+  /* Nav: stack logo above links, smaller gaps */
+  nav {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+  }
+  .nav-links {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Main content: less side padding on small screens */
+  main {
+    padding: 2.5rem 1.2rem;
+  }
+
+  /* Hero: stack text above visual, shrink text sizes */
+  .hero-upgraded {
+    flex-direction: column;
+    padding: 1rem 0 2rem;
+  }
+  .hero-text h1 {
+    font-size: 2rem !important;
+  }
+  .hero-text p {
+    font-size: 1rem !important;
+  }
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-buttons a {
+    min-width: unset !important;
+    width: 100% !important;
+  }
+  .hero-visual {
+    height: 300px;
+    width: 100%;
+  }
+  .floating-card {
+    width: 200px;
+  }
+
+  /* How It Works band: smaller heading, tighter spacing */
+  .how-it-works-inner h2 {
+    font-size: 1.5rem !important;
+  }
+  .list-step {
+    gap: 1rem;
+  }
+
+  /* Problem & Solution preview: stack, smaller heading */
+  .ps-preview {
+    flex-direction: column;
+    padding: 3rem 1.2rem;
+    gap: 2rem;
+  }
+  .ps-preview h2 {
+    font-size: 1.5rem !important;
+  }
+
+  /* Problem & Solution page bands: stack icon above text */
+  .ps-band {
+    flex-direction: column;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  .ps-band-icon, .ps-band-icon-img {
+    width: 100px;
+  }
+  .ps-band-text h2 {
+    font-size: 1.5rem;
+  }
+  .ps-band-text p {
+    font-size: 0.95rem;
+  }
+
+  /* Planner: stack sidebar above the semester grid instead of side-by-side */
+  .workspace-layout {
+    flex-direction: column;
+  }
+  #course-sidebar {
+    width: 100%;
+    position: static; /* sticky doesn't make sense once stacked */
+    max-height: none;
+  }
+  #semester-grid {
+    width: 100%;
+  }
+  .semester-row {
+    justify-content: center;
+  }
+
+  /* Choice cards: full width instead of fixed 280px */
+  .choice-card {
+    width: 100%;
+  }
+
+  /* Plan heading: stack title above save/reset buttons */
+  .plan-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .plan-heading-actions {
+    width: 100%;
+  }
+  .plan-heading-actions button {
+    flex: 1;
+  }
+
+  /* Modals: tighter padding on small screens */
+  .modal-box {
+    padding: 1.5rem;
+  }
+
+  /* Footer: stack instead of spread across */
+  .site-footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.2rem;
+  }
+
+  /* Hide the decorative cursor glow entirely on touch/small screens (already partly handled, this reinforces it) */
+  .cursor-glow {
+    display: none;
+  }
+
+  /* Background blobs: shrink so they don't dominate a small viewport */
+  .bg-blob-1, .bg-blob-2, .bg-blob-3 {
+    width: 180px;
+    height: 180px;
+  }
+}
