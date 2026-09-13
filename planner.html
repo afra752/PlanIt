@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlanIt — Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-decor">
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+  </div>
+  <nav>
+    <a href="index.html" class="nav-logo">PlanIt</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem-solution.html">Problem & Solution</a></li>
+      <li><a href="planner.html" class="active">Planner</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="plan-choice" class="reveal-slow">
+      <p class="eyebrow">let's get started</p>
+      <h2>Start your plan</h2>
+      <p class="section-subtext">Whichever you choose, you can adjust everything later.</p>
+      <div class="choice-cards" id="choice-cards-container">
+        <button class="choice-card" id="btn-scratch">
+          <div class="choice-icon">📝</div>
+          <h3>Build My Own</h3>
+          <p>Start a brand new custom plan.</p>
+        </button>
+        <button class="choice-card" id="btn-preset">
+          <div class="choice-icon">🎓</div>
+          <h3>University of Sharjah — Computer Science</h3>
+          <p>Start with the official CS plan, pre-loaded and ready to adjust.</p>
+          <span class="saved-badge" id="badge-preset">✓ Continue your saved plan</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="planner-workspace" style="display: none;">
+      
+      <div class="workspace-toolbar">
+        <button id="btn-back" class="btn-secondary" style="width: auto;">← Back to plan selection</button>
+      </div>
+
+      <div class="plan-heading">
+        <div>
+          <h2 id="plan-title"></h2>
+          <p class="plan-tagline">Drag and drop courses to build your journey, your way.</p>
+        </div>
+        <button id="btn-save-plan" class="btn-secondary-small" style="width: auto;">💾 Save Plan</button>
+      </div>
+
+      <div class="workspace-layout">
+        <aside id="course-sidebar">
+          <h3>Courses</h3>
+          <button id="btn-add-course" class="btn-secondary">+ Add Course</button>
+
+          <div id="add-course-form" style="display: none;">
+            <input type="text" id="input-name" placeholder="Course name">
+            <input type="number" id="input-credits" placeholder="Credits" min="0">
+            <select id="input-prereqs" multiple></select>
+            <small class="field-hint">Hold Ctrl/Cmd to select multiple prerequisites</small>
+            <select id="input-coreqs" multiple></select>
+            <small class="field-hint">Hold Ctrl/Cmd to select multiple corequisites</small>
+            <select id="input-year">
+              <option value="">No year standing required</option>
+              <option value="1">Freshman standing</option>
+              <option value="2">Sophomore standing</option>
+              <option value="3">Junior standing</option>
+              <option value="4">Senior standing</option>
+            </select>
+            <div class="checkbox-row">
+              <label><input type="checkbox" value="fall" class="term-check"> Fall</label>
+              <label><input type="checkbox" value="spring" class="term-check"> Spring</label>
+              <label><input type="checkbox" value="summer" class="term-check"> Summer</label>
+            </div>
+            <select id="input-difficulty">
+              <option value="1">Difficulty: Easy</option>
+              <option value="2">Difficulty: Light</option>
+              <option value="3" selected>Difficulty: Moderate</option>
+              <option value="4">Difficulty: Hard</option>
+              <option value="5">Difficulty: Very Hard</option>
+            </select>
+            <div class="form-btn-row">
+              <button id="btn-cancel-course" class="btn-secondary-small">Cancel</button>
+              <button id="btn-save-course" class="btn-primary-small">Save Course</button>
+            </div>
+          </div>
+
+          <div id="course-list"></div>
+        </aside>
+
+        <div id="semester-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="how-to-plan-modal" class="modal-overlay">
+    <div class="modal-box">
+      <button id="btn-close-modal" class="modal-close">✕</button>
+      <h2>How to Plan</h2>
+      <p>1. Browse your available courses in the sidebar on the left.</p>
+      <p>2. Drag a course into the semester you want to take it.</p>
+      <p>3. If a course needs a prerequisite or year standing you haven't met yet, we'll let you know.</p>
+      <p>4. Use "+ Add Semester" if you need an extra term, like a summer session.</p>
+      <button id="btn-got-it" class="btn-primary-small">Got it, let's plan!</button>
+    </div>
+  </div>
+
+  <div id="name-plan-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h2>Name Your Plan</h2>
+      <p>Give this plan a name so you can find it later.</p>
+      <input type="text" id="input-plan-name" placeholder="e.g. My CS Plan" class="modal-input">
+      <button id="btn-confirm-plan-name" class="btn-primary-small">Save Plan</button>
+    </div>
+  </div>
+
+  <div id="confirm-delete-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h2>Delete this plan?</h2>
+      <p>This can't be undone.</p>
+      <div class="form-btn-row">
+        <button id="btn-cancel-delete" class="btn-secondary-small">Cancel</button>
+        <button id="btn-confirm-delete" class="btn-primary-small">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+  <script src="script.js"></script>
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="problem-solution.html">Problem & Solution</a>
+    </div>
+    <a href="index.html" class="footer-brand">PlanIt</a>
+    <div class="footer-tag">Made for DesignAthon 2026</div>
+  </footer>
+  <script src="reveal.js"></script>
+</body>
+</html>
