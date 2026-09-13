@@ -911,6 +911,7 @@ a.nav-logo, a.footer-brand {
   flex: 1 1 0 !important;
   width: auto !important;
   min-width: 220px;
+  height: 45px;
 }
 
 
