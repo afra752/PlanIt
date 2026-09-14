@@ -969,17 +969,6 @@ a.nav-logo, a.footer-brand {
     flex-direction: column;
     width: 100%;
   }
-  .hero-buttons a {
-    min-width: unset !important;
-    width: 100% !important;
-  }
-  .hero-visual {
-    height: 300px;
-    width: 100%;
-  }
-  .floating-card {
-    width: 200px;
-  }
 
   /* How It Works band: smaller heading, tighter spacing */
   .how-it-works-inner h2 {
