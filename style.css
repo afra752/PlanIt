@@ -933,7 +933,10 @@ a.nav-logo, a.footer-brand {
    Only applies below 700px wide — desktop styling above is untouched
    ============================ */
 @media (max-width: 700px) {
-
+  /* Hide decorative floating hero elements on mobile - they overlap content at small sizes */
+  .hero-visual {
+    display: none;
+  }
   /* Nav: stack logo above links, smaller gaps */
   nav {
     flex-direction: column;
